@@ -1,0 +1,111 @@
+footer.main-footer {
+    margin-top: auto!important;
+}
+
+td.bg-title {
+    background-color: #dadada;
+    font-weight: bolder;
+}
+
+th.title, td.title {
+    background-color: #fafafa;
+    font-weight: bolder;
+}
+
+th.gray, td.gray {
+    background-color: #fafafa;
+    font-weight: bolder;
+}
+
+th.total, td.total {
+    border-top: 2px double #aaa;
+}
+
+th.lv1-bottom, td.lv1-bottom {
+    border-bottom: none;
+}
+
+td.lv2-top {
+    border-bottom: none;
+    border-top: none;
+    padding-left:30px;
+}
+
+td.lv2-md {
+    border-top: none;
+    border-bottom: none;
+    padding-left:30px;
+}
+
+td.lv2-last {
+    border-top:none;
+    padding-left:30px;
+}
+
+td.lv3 {
+    border-bottom: none;
+    border-top: none;
+    padding-left:60px;
+}
+
+th.center {
+    text-align: center;
+}
+
+td.amount, td.rate, th.amount, th.rate {
+    text-align: right;
+}
+
+td.amount {
+    width: 120px;
+}
+
+td.rate {
+    width: 80px;
+}
+
+tr.bottom {
+    border-top: double;
+}
+
+th.info {
+    border: none;
+    color: #796AEE;
+    padding: 12px 10px;
+    text-align: center;
+  }
+
+td.info {
+    border: none;
+    padding: 12px 10px;
+  }
+
+h4.bank_name {
+    padding: 12px;
+    color: #796AEE;
+    font: bolder;
+}
+
+.rate-color {
+    color: #555;
+}
+
+.oauth-g {
+    position: relative;
+    width: 100%;
+    height: 10vh;
+    bolder: 1px solid black;
+}
+
+.oauth-g i{
+    position: absolute;
+    left: 0;
+    top: 50%;
+}
+.oauth-g h3 {
+    margin: 0;
+    position: absolute;
+    right: 0;
+    font-size: 20px;
+    top: 50%;
+}
