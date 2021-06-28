@@ -1,0 +1,16 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+    <h2>帳簿追加</h2>
+    <form action="" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="form-group">
+                <label>帳簿名</label>
+                {{ form.name }}
+            </div>
+            {{ field.errors }}
+
+            <button type="submit" class="btn btn-primary ">保存</button>
+    </form>
+{% endblock %}

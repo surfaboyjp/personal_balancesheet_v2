@@ -1,0 +1,27 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+<div class="row ">
+    <div class="col-md-6 b-font">
+        <br>
+        <h3>新規ユーザー登録</h3>
+        <br>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                {{ field.label }}
+                {{ field }}
+                {{ field.errors }}
+            <br>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary">SignUp</button>
+            <br> <br>
+
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}

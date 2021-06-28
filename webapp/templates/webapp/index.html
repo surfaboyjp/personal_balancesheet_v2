@@ -1,0 +1,42 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+<script>
+    jQuery(function($){
+        $.extend( $.fn.dataTable.defaults, {
+            language: {
+                url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
+                }
+                });
+        $("#fstatement_list").DataTable({
+            "searching": true,     //検索ボックスでのテキスト検索を可能にする
+            "paging":   true,      //ページングを可能にする
+            "ordering": true,      //各項目でのソートを可能にする
+            "lengthChange": true,  //件数の切り替え機能を可能にする
+
+            }).columns.adjust().draw();
+        });
+</script>
+<h2>トップページ</h2>
+<table id="fstatement_list" width="100%" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="text-center" width="40%">個人名</th>
+            <th class="text-center" width="40%">更新日</th>
+            <th class="text-center">内容</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for journal in journal_list %}
+        <tr class="odd gradeX text-center">
+            <td class="text-center">{{ journal.name}}</td>
+            <td class="text-center">{{ journal.updated_at|date:"Y/m/d" }}</td>
+
+            <!-- hrefの内容を記載-->
+            <td><a href="{% url 'webapp:journal_detail' journal.pk %}">詳細へ</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

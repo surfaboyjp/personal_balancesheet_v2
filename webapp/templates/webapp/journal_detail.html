@@ -1,0 +1,396 @@
+{% extends 'webapp/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<section class="table">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">【 {% now "Y/m/d" %} 】決算詳細</h3>
+                        <a class="mx-3" href="{% url 'webapp:records' journal_id %}"><h5>過去の決算一覧</h5></a>
+                    </div><!--card header-->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>貸借対照表&nbsp;<i class="fas fa-balance-scale fa-1x block"></i></h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <table class="table table-bordered" width="100%" height="100%">
+                                    <tr>
+                                        <th colspan="4" class="title">資産の部</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="lv1-bottom">流動資産</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount lv1-bottom">{{ bs.liquid_assets|intcomma }}</td>
+                                        <td class="rate lv1-bottom rate-color">{{ bs.liquid_asset_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% for l_asset in bs.liquid_asset_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ l_asset.name }}</td>
+                                        <td class="amount lv1-bottom">{{ l_asset.value|intcomma }}</td>
+                                        <td class="rate lv1-bottom rate-color">{{ l_asset.rate|floatformat:1 }}%</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td class="lv2-last">固定資産</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount lv2-last">{{ bs.fixed_assets|intcomma }}</td>
+                                        <td class="rate lv2-last rate-color">{{ bs.fixed_asset_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% for f_asset in bs.fixed_asset_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ f_asset.name }}</td>
+                                        <td class="amount lv1-bottom">{{ f_asset.value|intcomma }}</td>
+                                        <td class="rate lv1-bottom rate-color">{{ f_asset.rate|floatformat:1 }}%</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td class="lv2-top">繰延資産</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv2-top amount">{{ bs.deferred_assets|intcomma }}</td>
+                                        <td class="lv2-top rate rate-color">{{ bs.deferred_asset_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% for d_asset in bs.deferred_asset_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ d_asset.name }}</td>
+                                        <td class="amount lv1-bottom">{{ d_asset.value|intcomma }}</td>
+                                        <td class="rate lv1-bottom rate-color">{{ d_asset.rate|floatformat:1 }}%</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr class="bottom">
+                                        <td>総資産</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount bs_total_assets">{{ bs.asset|intcomma }}</td>
+                                        <td class="rate rate-color">100%</td>
+                                    </tr>
+                                </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table class="table table-bordered" width="100%" height="100%">
+                                    <tr>
+                                        <th colspan="4" class="title">負債の部</th>
+                                    </tr>
+                                    <tr>
+                                        <td>流動負債</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ bs.liquid_liability|intcomma }}</td>
+                                        <td class="rate rate-color">{{ bs.liquid_liability_rate|intcomma|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% for l_liability in bs.liquid_liability_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ l_liability.name }}</td>
+                                        <td class="amount lv1-bottom rate-color">{{ l_liability.value|intcomma }}</td>
+                                        <td class="rate lv1-bottom rate-color">{{ l_liability.rate|floatformat:1 }}%</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td>固定負債</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ bs.liquid_liability|intcomma }}</td>
+                                        <td class="rate rate-color">{{ bs.fixed_liability_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% for f_liability in bs.fixed_liability_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ f_liability.name }}</td>
+                                        <td class="amount lv1-bottom">{{ f_liability.value|intcomma }}</td>
+                                        <td class="rate lv1-bottom rate-color">{{ f_liability.rate|floatformat:1 }}%</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                         <td>負債合計</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount bs_total_assets">{{ bs.liability|intcomma }}</td>
+                                        <td class="rate rate-color">100%</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="title" colspan="4">純資産の部</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="lv1-bottom">純資産</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount lv1-bottom">{{ bs.capital|intcomma }}</td>
+                                        <td class="rate lv1-bottom rate-color">{{ bs.capital_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr class="bottom">
+                                        <td>負債・純資産合計</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ bs.liability_capital_sum|intcomma }}</td>
+                                        <td class="rate rate-color">100%</td>
+                                    </tr>
+                                </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div> <!-- row -->
+                        <br>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>損益計算書&nbsp;<i class="far fa-file-alt"></i></h4>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th colspan="4" class="title td-top">損益計算書</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">総収入</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount font-weight-bold">{{ pl.income|intcomma }}</td>
+                                        <td class="rate font-weight-bold">100％</td>
+                                    </tr>
+                                    <tr>
+                                        <td>メイン収入</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ pl.main_incomes|intcomma }}</td>
+                                        <td class="rate">{{ pl.main_income_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% for m_income in pl.main_income_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ m_income.name }}</td>
+                                        <td class="amount lv1-bottom">{{ m_income.value|intcomma }}</td>
+                                        <td class="rate">{{ m_income.rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td>サブ収入</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ pl.sub_incomes|intcomma }}</td>
+                                        <td class="rate">{{ pl.sub_income_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% for s_income in pl.sub_income_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ s_income.name }}</td>
+                                        <td class="amount lv1-bottom">{{ s_income.value|intcomma }}</td>
+                                        <td class="rate">{{ s_income.rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr class="bottom">
+                                        <td>流動支出</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ pl.liquid_costs|intcomma }}</td>
+                                        <td class="rate">{{ pl.liquid_cost_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% for f_cost in pl.fixed_cost_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ f_cost.name }}</td>
+                                        <td class="amount lv1-bottom">{{ f_cost.value|intcomma }}</td>
+                                        <td class="rate">{{ f_cost.rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td>固定支出</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ pl.fixed_costs|intcomma }}</td>
+                                        <td class="rate">{{ pl.fixed_cost_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% for l_cost in pl.liquid_cost_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ l_cost.name }}</td>
+                                        <td class="amount lv1-bottom">{{ l_cost.value|intcomma }}</td>
+                                        <td class="rate">{{ l_cost.rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td class="font-weight-bold">総支出</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount font-weight-bold">{{ pl.cost|intcomma }}</td>
+                                        <td class="rate font-weight-bold">{{ pl.cost_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">繰越資産</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount font-weight-bold">{{ pl.saving|intcomma }}</td>
+                                        <td class="rate font-weight-bold">{{ pl.saving_rate|floatformat:1 }}％</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div><!-- col -->
+        </div><!-- row -->
+    </div><!-- container -->
+</section>
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">資産の内訳</h3>
+            </div><!--card header-->
+            <div class="card-body">
+                <canvas id="pie_assets" width="400" height="400"></canvas>
+                <script>
+                    var ctx = document.getElementById('pie_assets');
+                    var data_current_assets = '{{bs.liquid_assets}}';
+                    var data_fixed_assets = '{{bs.fixed_assets}}';
+                    var data_deferred_assets = '{{bs.deferred_assets}}';
+                    var pie_assets = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['流動資産','固定資産','繰延資産'],
+                            datasets: [{
+                                backgroundColor: ['rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)'],
+                                data: [data_current_assets, data_fixed_assets,data_deferred_assets]
+                            }]
+                        },
+                    });
+                </script>
+            </div><!-- class card body -->
+        </div><!-- class card -->
+    </div><!-- col -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">負債・純資産の内訳</h3>
+            </div><!--card header-->
+            <div class="card-body">
+                <canvas id="pie_liabilities" width="400" height="400"></canvas>
+                <script>
+                    var ctx = document.getElementById('pie_liabilities');
+                    var data_current_liabilities = '{{bs.liquid_liability}}';
+                    var data_fixed_liabilities = '{{bs.fixed_liability}}';
+                    var data_net_assets = '{{bs.capital}}';
+                    var pie_liabilities = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['流動負債','固定負債','純資産'],
+                            datasets: [{
+                                backgroundColor: ['rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(153, 102, 255, 0.8)'],
+                                data: [data_current_liabilities, data_fixed_liabilities,data_net_assets]
+                            }]
+                        },
+                    });
+                </script>
+            </div><!-- class card body -->
+        </div><!-- class card -->
+    </div>
+</div><!-- row -->
+ <div class="row my-5">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">推移グラフ</h3>
+                    </div><!--card header-->
+                    <div class="card-body">
+                        <canvas id="myChart" width="400" height="200"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart').getContext('2d');
+                            var label_fyear = [ {% for item in records reversed %} "{{ item.closed_at }}", {% endfor %}];
+                            label_fyear.push("{% now 'M d, Y' %}")
+                            var data_sales = [ {% for item in records reversed %} {{item.income_sum }}, {% endfor %} ];
+                            data_sales.push({{pl.income}})
+                            var data_cost = [ {% for item in records reversed %} {{item.cost_sum }}, {% endfor %} ];
+                            data_cost.push({{pl.cost}})
+                            var data_saving = [ {% for item in records reversed %} {{item.saving }}, {% endfor %} ];
+                            data_saving.push({{pl.saving}})
+
+                            //========ここから3行追加========
+                            var data_total_assets = [ {% for item in records reversed %} {{item.asset_sum }}, {% endfor %} ];
+                            data_total_assets.push({{bs.asset}})
+                            var data_liabilities = [ {% for item in records reversed %} {{item.liability_sum }}, {% endfor %} ];
+                            data_liabilities.push({{bs.liability}})
+                            var data_net_assets = [ {% for item in records reversed %} {{item.capital }}, {% endfor %} ];
+                            data_net_assets.push({{bs.capital}})
+                            //========ここまで追加========
+
+                            console.log(label_fyear)
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',//line から bar に変更
+                                data: {
+                                    labels: label_fyear,
+                                    datasets: [{
+                                        label: '総収入',
+                                        data: data_sales,
+                                        type: 'line',//この行（type）を追加
+                                        fill: false,
+                                        lineTension: 0,
+                                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                        borderColor: 'rgba(255, 99, 132, 1)',
+                                        borderWidth: 2,
+                                        yAxisID: 'y-axis-1',
+                                    },{
+                                        label: '総支出',
+                                        data: data_cost,
+                                        type: 'line',//この行（type）を追加
+                                        fill: false,
+                                        lineTension: 0,
+                                        backgroundColor:'rgba(54, 162, 235, 0.2)',
+                                        borderColor: 'rgba(54, 162, 235, 1)',
+                                        borderWidth: 2,
+                                        yAxisID: 'y-axis-1',
+                                    },{
+                                        label: '繰越資産',
+                                        data: data_saving,
+                                        type: 'line',///この行（type）を追加
+                                        fill: false,
+                                        lineTension: 0,
+                                        backgroundColor:'rgba(255, 206, 86, 0.2)',
+                                        borderColor: 'rgba(255, 206, 86, 1)',
+                                        borderWidth: 2,
+                                        yAxisID: 'y-axis-1',
+                                    },
+
+                                    //========ここから追加（総資産、固定負債、純資産）========
+                                    {
+                                        label: '総資産',
+                                        data: data_total_assets,
+                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        borderWidth: 1,
+                                        yAxisID: 'y-axis-2',
+                                    },{
+                                        label: '固定負債',
+                                        data: data_liabilities,
+                                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                                        borderColor: 'rgba(255, 159, 64, 1)',
+                                        borderWidth: 1,
+                                        yAxisID: 'y-axis-2',
+                                    },{
+                                        label: '純資産',
+                                        data: data_net_assets,
+                                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                                        borderColor: 'rgba(153, 102, 255, 1)',
+                                        borderWidth: 1,
+                                        yAxisID: 'y-axis-2',
+                                    }
+                                    //========ここまで追加（総資産、固定負債、純資産）========
+
+                                    ],
+                                },
+                                options: {
+                                    responsive: true,
+                                    scales: {
+                                        yAxes: [{
+                                            id: 'y-axis-1',
+                                            type: 'linear',
+                                            position: 'left'
+                                        },{
+                                            id: 'y-axis-2',
+                                            type: 'linear',
+                                            position: 'right'
+                                        }]
+                                    }
+                                }
+
+                            });
+                        </script>
+                    </div><!-- class card body -->
+                </div><!-- class card -->
+            </div><!-- col -->
+        </div><!-- row -->
+
+{% endblock %}

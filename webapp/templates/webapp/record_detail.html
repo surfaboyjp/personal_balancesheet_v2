@@ -1,0 +1,257 @@
+{% extends 'webapp/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<section class="table">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">【 {{record.closed_at|date:"Y年m月分"}} 】決算詳細</h3>
+                    </div><!--card header-->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>貸借対照表&nbsp;<i class="fas fa-balance-scale fa-1x block"></i></h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <table class="table table-bordered" width="100%" height="100%">
+                                    <tr>
+                                        <th colspan="4" class="title">資産の部</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="lv1-bottom">流動資産</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount lv1-bottom">{{ record.liquid_asset_sum|intcomma }}</td>
+                                    </tr>
+                                    {% for l_asset in record.liquid_asset_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ l_asset.name }}</td>
+                                        <td class="amount lv1-bottom">{{ l_asset.value|intcomma }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td class="lv2-last">固定資産</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount lv2-last">{{ record.fixed_asset_sum|intcomma }}</td>
+                                    </tr>
+                                    {% for f_asset in record.fixed_asset_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ f_asset.name }}</td>
+                                        <td class="amount lv1-bottom">{{ f_asset.value|intcomma }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td class="lv2-top">繰延資産</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv2-top amount">{{ record.deferred_asset_sum|intcomma }}</td>
+                                    </tr>
+                                    {% for d_asset in record.deferred_asset_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ d_asset.name }}</td>
+                                        <td class="amount lv1-bottom">{{ d_asset.value|intcomma }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr class="bottom">
+                                        <td>総資産</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount bs_total_assets">{{ record.asset_sum|intcomma }}</td>
+                                    </tr>
+                                </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table class="table table-bordered" width="100%" height="100%">
+                                    <tr>
+                                        <th colspan="4" class="title">負債の部</th>
+                                    </tr>
+                                    <tr>
+                                        <td>流動負債</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ record.liquid_liability_sum|intcomma }}</td>
+                                    </tr>
+                                    {% for l_liability in record.liquid_liability_list.list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ l_liability.name }}</td>
+                                        <td class="amount lv1-bottom rate-color">{{ l_liability.value|intcomma }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td>固定負債</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ record.fixed_liability_sum|intcomma }}</td>
+                                    </tr>
+                                    {% for f_liability in record.fixed_liability_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ f_liability.name }}</td>
+                                        <td class="amount lv1-bottom">{{ f_liability.value|intcomma }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                         <td>負債合計</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount bs_total_assets">{{ record.liability_sum|intcomma }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="title" colspan="4">純資産の部</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="lv1-bottom">純資産</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount lv1-bottom">{{ record.capital|intcomma }}</td>
+                                    </tr>
+                                    <tr class="bottom">
+                                        <td>負債・純資産合計</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ record.liability_capital_sum|intcomma }}</td>
+                                    </tr>
+                                </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div> <!-- row -->
+                        <br>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>損益計算書&nbsp;<i class="far fa-file-alt"></i></h4>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th colspan="4" class="title td-top">損益計算書</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">総収入</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount font-weight-bold">{{ record.income_sum|intcomma }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>メイン収入</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ record.main_income_sum|intcomma }}</td>
+                                    </tr>
+                                    {% for m_income in record.main_income_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ m_income.name }}</td>
+                                        <td class="amount lv1-bottom">{{ m_income.value|intcomma }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td>サブ収入</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ record.sub_income_sum|intcomma }}</td>
+                                    </tr>
+                                    {% for s_income in record.sub_income_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ s_income.name }}</td>
+                                        <td class="amount lv1-bottom">{{ s_income.value|intcomma }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr class="bottom">
+                                        <td>流動支出</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ record.liquid_cost_sum|intcomma }}</td>
+                                    </tr>
+                                    {% for f_cost in record.fixed_cost_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ f_cost.name }}</td>
+                                        <td class="amount lv1-bottom">{{ f_cost.value|intcomma }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td>固定支出</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount">{{ record.fixed_cost_sum|intcomma }}</td>
+                                    </tr>
+                                    {% for l_cost in record.liquid_cost_list %}
+                                    <tr>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom">{{ l_cost.name }}</td>
+                                        <td class="amount lv1-bottom">{{ l_cost.value|intcomma }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td class="font-weight-bold">総支出</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount font-weight-bold">{{ record.cost_sum|intcomma }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">繰越資産</td>
+                                        <td class="lv1-bottom"></td>
+                                        <td class="amount font-weight-bold">{{ record.saving|intcomma }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div><!-- col -->
+        </div><!-- row -->
+    </div><!-- container -->
+</section>
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">資産の内訳</h3>
+            </div><!--card header-->
+            <div class="card-body">
+                <canvas id="pie_assets" width="400" height="400"></canvas>
+                <script>
+                    var ctx = document.getElementById('pie_assets');
+                    var data_current_assets = '{{record.liquid_asset_sum}}';
+                    var data_fixed_assets = '{{record.fixed_asset_sum}}';
+                    var data_deferred_assets = '{{record.deferred_asset_sum}}';
+                    var pie_assets = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['流動資産','固定資産','繰延資産'],
+                            datasets: [{
+                                backgroundColor: ['rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)'],
+                                data: [data_current_assets, data_fixed_assets,data_deferred_assets]
+                            }]
+                        },
+                    });
+                </script>
+            </div><!-- class card body -->
+        </div><!-- class card -->
+    </div><!-- col -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">負債・純資産の内訳</h3>
+            </div><!--card header-->
+            <div class="card-body">
+                <canvas id="pie_liabilities" width="400" height="400"></canvas>
+                <script>
+                    var ctx = document.getElementById('pie_liabilities');
+                    var data_current_liabilities = '{{record.liquid_liability_sum}}';
+                    var data_fixed_liabilities = '{{record.fixed_liability_sum}}';
+                    var data_net_assets = '{{record.capital}}';
+                    var pie_liabilities = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['流動負債','固定負債','純資産'],
+                            datasets: [{
+                                backgroundColor: ['rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(153, 102, 255, 0.8)'],
+                                data: [data_current_liabilities, data_fixed_liabilities,data_net_assets]
+                            }]
+                        },
+                    });
+                </script>
+            </div><!-- class card body -->
+        </div><!-- class card -->
+    </div>
+</div><!-- row -->
+
+{% endblock %}
