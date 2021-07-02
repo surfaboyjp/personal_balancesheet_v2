@@ -83,7 +83,7 @@ td.info {
 h4.bank_name {
     padding: 12px;
     color: #796AEE;
-    font: bolder;
+    /*font: bolder;*/
 }
 
 .rate-color {
