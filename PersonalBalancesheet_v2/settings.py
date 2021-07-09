@@ -138,6 +138,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -151,7 +152,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 if not DEBUG:
     SECRET_KEY = 'django-insecure-1rk31xkljd58bx9l6$*temluj%sroj*8sj(i1^s$q(#0w%4pz7'
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     import django_heroku
     django_heroku.settings(locals())
 
