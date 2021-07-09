@@ -1,0 +1,92 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+
+<h2>{{ journal.name }} 設定</h2>
+<a class="mx-3" href="{% url 'webapp:update_journal' journal.id %}"><h5>帳簿名の変更・削除</h5></a>
+
+<table id="fstatement_list" width="100%" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="text-center" width="40%">資産名</th>
+            <th class="text-center" width="40%">更新日</th>
+            <th class="text-center">変更</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for asset in assets %}
+        <tr class="odd gradeX text-center">
+            <td class="text-center">{{ asset.name}}</td>
+            <td class="text-center">{{ asset.updated_at|date:"Y/m/d" }}</td>
+
+            <!-- hrefの内容を記載-->
+            <td><a href="{% url 'webapp:update_asset' asset.id %}">変更する</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<table id="fstatement_list" width="100%" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="text-center" width="40%">負債名</th>
+            <th class="text-center" width="40%">更新日</th>
+            <th class="text-center">変更</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for liability in liabilities %}
+        <tr class="odd gradeX text-center">
+            <td class="text-center">{{ liability.name}}</td>
+            <td class="text-center">{{ liability.updated_at|date:"Y/m/d" }}</td>
+
+            <!-- hrefの内容を記載-->
+            <td><a href="{% url 'webapp:update_liability' liability.id %}">変更する</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<table id="fstatement_list" width="100%" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="text-center" width="40%">収入名</th>
+            <th class="text-center" width="40%">更新日</th>
+            <th class="text-center">変更</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for income in incomes %}
+        <tr class="odd gradeX text-center">
+            <td class="text-center">{{ income.name}}</td>
+            <td class="text-center">{{ income.updated_at|date:"Y/m/d" }}</td>
+
+            <!-- hrefの内容を記載-->
+            <td><a href="{% url 'webapp:update_income' income.id %}">変更する</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<table id="fstatement_list" width="100%" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="text-center" width="40%">支出名</th>
+            <th class="text-center" width="40%">更新日</th>
+            <th class="text-center">変更</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cost in costs %}
+        <tr class="odd gradeX text-center">
+            <td class="text-center">{{ cost.name}}</td>
+            <td class="text-center">{{ cost.updated_at|date:"Y/m/d" }}</td>
+
+            <!-- hrefの内容を記載-->
+            <td><a href="{% url 'webapp:update_cost' cost.id %}">変更する</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

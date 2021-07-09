@@ -39,7 +39,7 @@ class AssetForm(ModelForm):
 
 class LiabilityForm(ModelForm):
     class Meta:
-        model = Asset
+        model = Liability
         fields = ('name', 'journal', 'value', 'category',)
 
     def __init__(self, *args, **kwargs):

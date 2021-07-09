@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.views import generic
-from django.views.generic import TemplateView, DetailView, ListView, CreateView
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
 from .models import *
 from django.views.generic.list import MultipleObjectMixin  # この行を追加
 from django.views.generic.edit import ModelFormMixin
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 import numpy
 from .forms import *
 from django.urls import reverse_lazy
@@ -272,11 +272,55 @@ class AddAssetView(CreateView):
     success_url = reverse_lazy('webapp:index')
 
 
+class UpdateAssetView(UserPassesTestMixin, UpdateView):
+    model = Asset
+    template_name = 'webapp/update_asset.html'
+    form_class = AssetForm
+    success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        asset = Asset.objects.get(id = self.kwargs['pk'])
+        journal = Journal.objects.get(id=asset.journal.id)
+        return journal.user == self.request.user
+
+
+class DeleteAssetView(UserPassesTestMixin, DeleteView):
+    model = Asset
+    success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        asset = Asset.objects.get(id = self.kwargs['pk'])
+        journal = Journal.objects.get(id=asset.journal.id)
+        return journal.user == self.request.user
+
+
 class AddLiabilityView(CreateView):
     template_name = 'webapp/add_liability.html'
     model = Liability
     form_class = LiabilityForm
     success_url = reverse_lazy('webapp:index')
+
+
+class UpdateLiabilityView(UserPassesTestMixin, UpdateView):
+    model = Liability
+    template_name = 'webapp/update_liability.html'
+    form_class = LiabilityForm
+    success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        liability = Liability.objects.get(id = self.kwargs['pk'])
+        journal = Journal.objects.get(id=liability.journal.id)
+        return journal.user == self.request.user
+
+
+class DeleteLiabilityView(UserPassesTestMixin, DeleteView):
+    model = Liability
+    success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        liability = Liability.objects.get(id = self.kwargs['pk'])
+        journal = Journal.objects.get(id=liability.journal.id)
+        return journal.user == self.request.user
 
 
 class AddIncomeView(CreateView):
@@ -286,6 +330,28 @@ class AddIncomeView(CreateView):
     success_url = reverse_lazy('webapp:index')
 
 
+class UpdateIncomeView(UserPassesTestMixin, UpdateView):
+    model = Income
+    template_name = 'webapp/update_income.html'
+    form_class = IncomeForm
+    success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        income = Income.objects.get(id = self.kwargs['pk'])
+        journal = Journal.objects.get(id=income.journal.id)
+        return journal.user == self.request.user
+
+
+class DeleteIncomeView(UserPassesTestMixin, DeleteView):
+    model = Income
+    success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        income = Income.objects.get(id = self.kwargs['pk'])
+        journal = Journal.objects.get(id=income.journal.id)
+        return journal.user == self.request.user
+
+
 class AddCostView(CreateView):
     template_name = 'webapp/add_cost.html'
     model = Cost
@@ -293,29 +359,77 @@ class AddCostView(CreateView):
     success_url = reverse_lazy('webapp:index')
 
 
+class UpdateCostView(UserPassesTestMixin, UpdateView):
+    model = Cost
+    template_name = 'webapp/update_cost.html'
+    form_class = CostForm
+    success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        cost = Cost.objects.get(id = self.kwargs['pk'])
+        journal = Journal.objects.get(id=cost.journal.id)
+        return journal.user == self.request.user
+
+
+class DeleteCostView(UserPassesTestMixin, DeleteView):
+    model = Cost
+    success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        cost = Cost.objects.get(id = self.kwargs['pk'])
+        journal = Journal.objects.get(id=cost.journal.id)
+        return journal.user == self.request.user
+
+
 class AddJournalView(CreateView):
     template_name = 'webapp/add_journal.html'
     model = Journal
-    form_class = JournalForm
+    # form_class = JournalForm
+    fields = ['name']
     success_url = reverse_lazy('webapp:index')
 
-    # def get(self, request, *args, **kwargs):
-    #     form_class = self.get_form_class()
-    #     form = form_class(user=request.user)
-    #     return super(AddJournalView, self).get(self.request)
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
-    def get_form_kwargs(self, *args, **kwargs):
-        kwargs = super(AddJournalView, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
 
-    # def form_valid(self, form):
-    #     form['user'] = self.request.user
-    #     form.save()
-    #     # journal = form.save(commit=False)
-    #     # journal.create_user = self.request.user
-    #     # journal.save()
-    #     return super().form_valid(form)
+class UpdateJournalView(UserPassesTestMixin, UpdateView):
+    model = Journal
+    template_name = 'webapp/update_journal.html'
+    fields = ['name']
+    success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        journal = Journal.objects.get(id=self.kwargs['pk'])
+        return journal.user == self.request.user
+
+
+class DeleteJournalView(UserPassesTestMixin, DeleteView):
+    model = Journal
+    success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        journal = Journal.objects.get(id=self.kwargs['pk'])
+        return journal.user == self.request.user
+
+
+class JournalSettingsView(DetailView):
+    model = Journal
+    template_name = 'webapp/journal_settings.html'
+
+    def get_context_data(self, **kwargs):
+        assets = Asset.objects.filter(journal=self.kwargs['pk']).values()
+        liabilities = Liability.objects.filter(journal=self.kwargs['pk']).values()
+        incomes = Income.objects.filter(journal=self.kwargs['pk']).values()
+        costs = Cost.objects.filter(journal=self.kwargs['pk']).values()
+        context = {
+            'journal': self.object,
+            'assets': assets,
+            'liabilities': liabilities,
+            'incomes': incomes,
+            'costs': costs,
+        }
+        return context
 
 
 def get_value_sum(dict_list):

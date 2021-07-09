@@ -1,0 +1,17 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+    <h2>帳簿変更</h2>
+    <form action="" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="form-group">
+                <label>帳簿名</label>
+                {{ form.name }}
+            </div>
+            {{ field.errors }}
+
+            <button type="submit" class="btn btn-primary ">変更</button>
+    </form>
+    <a class="btn btn-danger" href="{% url 'webapp:delete_journal' journal.id %}">削除</a>
+{% endblock %}
