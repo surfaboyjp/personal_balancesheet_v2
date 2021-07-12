@@ -8,7 +8,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 import numpy
 from .forms import *
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth import login
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -269,14 +269,18 @@ class AddAssetView(CreateView):
     template_name = 'webapp/add_asset.html'
     model = Asset
     form_class = AssetForm
-    success_url = reverse_lazy('webapp:index')
+
+    def get_success_url(self):
+        return reverse('webapp:journal_detail', kwargs={'pk': self.object.journal.id})
 
 
 class UpdateAssetView(UserPassesTestMixin, UpdateView):
     model = Asset
     template_name = 'webapp/update_asset.html'
     form_class = AssetForm
-    success_url = reverse_lazy('webapp:index')
+
+    def get_success_url(self):
+        return reverse('webapp:journal_detail', kwargs={'pk': self.object.journal.id})
 
     def test_func(self):
         asset = Asset.objects.get(id = self.kwargs['pk'])
@@ -286,7 +290,9 @@ class UpdateAssetView(UserPassesTestMixin, UpdateView):
 
 class DeleteAssetView(UserPassesTestMixin, DeleteView):
     model = Asset
-    success_url = reverse_lazy('webapp:index')
+
+    def get_success_url(self):
+        return reverse('webapp:journal_detail', kwargs={'pk': self.object.journal.id})
 
     def test_func(self):
         asset = Asset.objects.get(id = self.kwargs['pk'])
@@ -298,14 +304,18 @@ class AddLiabilityView(CreateView):
     template_name = 'webapp/add_liability.html'
     model = Liability
     form_class = LiabilityForm
-    success_url = reverse_lazy('webapp:index')
+
+    def get_success_url(self):
+        return reverse('webapp:journal_detail', kwargs={'pk': self.object.journal.id})
 
 
 class UpdateLiabilityView(UserPassesTestMixin, UpdateView):
     model = Liability
     template_name = 'webapp/update_liability.html'
     form_class = LiabilityForm
-    success_url = reverse_lazy('webapp:index')
+
+    def get_success_url(self):
+        return reverse('webapp:journal_detail', kwargs={'pk': self.object.journal.id})
 
     def test_func(self):
         liability = Liability.objects.get(id = self.kwargs['pk'])
@@ -315,7 +325,9 @@ class UpdateLiabilityView(UserPassesTestMixin, UpdateView):
 
 class DeleteLiabilityView(UserPassesTestMixin, DeleteView):
     model = Liability
-    success_url = reverse_lazy('webapp:index')
+
+    def get_success_url(self):
+        return reverse('webapp:journal_detail', kwargs={'pk': self.object.journal.id})
 
     def test_func(self):
         liability = Liability.objects.get(id = self.kwargs['pk'])
@@ -327,14 +339,18 @@ class AddIncomeView(CreateView):
     template_name = 'webapp/add_income.html'
     model = Income
     form_class = IncomeForm
-    success_url = reverse_lazy('webapp:index')
+
+    def get_success_url(self):
+        return reverse('webapp:journal_detail', kwargs={'pk': self.object.journal.id})
 
 
 class UpdateIncomeView(UserPassesTestMixin, UpdateView):
     model = Income
     template_name = 'webapp/update_income.html'
     form_class = IncomeForm
-    success_url = reverse_lazy('webapp:index')
+
+    def get_success_url(self):
+        return reverse('webapp:journal_detail', kwargs={'pk': self.object.journal.id})
 
     def test_func(self):
         income = Income.objects.get(id = self.kwargs['pk'])
@@ -344,7 +360,9 @@ class UpdateIncomeView(UserPassesTestMixin, UpdateView):
 
 class DeleteIncomeView(UserPassesTestMixin, DeleteView):
     model = Income
-    success_url = reverse_lazy('webapp:index')
+
+    def get_success_url(self):
+        return reverse('webapp:journal_detail', kwargs={'pk': self.object.journal.id})
 
     def test_func(self):
         income = Income.objects.get(id = self.kwargs['pk'])
@@ -356,14 +374,18 @@ class AddCostView(CreateView):
     template_name = 'webapp/add_cost.html'
     model = Cost
     form_class = CostForm
-    success_url = reverse_lazy('webapp:index')
+
+    def get_success_url(self):
+        return reverse('webapp:journal_detail', kwargs={'pk': self.object.journal.id})
 
 
 class UpdateCostView(UserPassesTestMixin, UpdateView):
     model = Cost
     template_name = 'webapp/update_cost.html'
     form_class = CostForm
-    success_url = reverse_lazy('webapp:index')
+
+    def get_success_url(self):
+        return reverse('webapp:journal_detail', kwargs={'pk': self.object.journal.id})
 
     def test_func(self):
         cost = Cost.objects.get(id = self.kwargs['pk'])
@@ -373,7 +395,9 @@ class UpdateCostView(UserPassesTestMixin, UpdateView):
 
 class DeleteCostView(UserPassesTestMixin, DeleteView):
     model = Cost
-    success_url = reverse_lazy('webapp:index')
+
+    def get_success_url(self):
+        return reverse('webapp:journal_detail', kwargs={'pk': self.object.journal.id})
 
     def test_func(self):
         cost = Cost.objects.get(id = self.kwargs['pk'])
@@ -384,7 +408,6 @@ class DeleteCostView(UserPassesTestMixin, DeleteView):
 class AddJournalView(CreateView):
     template_name = 'webapp/add_journal.html'
     model = Journal
-    # form_class = JournalForm
     fields = ['name']
     success_url = reverse_lazy('webapp:index')
 
