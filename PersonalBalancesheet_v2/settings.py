@@ -153,7 +153,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 
 
-SECRET_KEY = os.environ('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 import django_heroku
 django_heroku.settings(locals())
 
