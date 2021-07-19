@@ -42,7 +42,6 @@ class JournalDetailView(DetailView, MultipleObjectMixin):
             return redirect('/login')
 
         journal = Journal.objects.get(id=kwargs.get('pk'))
-        print(journal)
         if not journal.user == request.user:
             return redirect('/')
         context = self.get_context_data(**kwargs)
@@ -436,7 +435,7 @@ class DeleteJournalView(UserPassesTestMixin, DeleteView):
         return journal.user == self.request.user
 
 
-class JournalSettingsView(DetailView):
+class JournalSettingsView(DetailView, MultipleObjectMixin):
     model = Journal
     template_name = 'webapp/journal_settings.html'
 
@@ -453,6 +452,16 @@ class JournalSettingsView(DetailView):
             'costs': costs,
         }
         return context
+
+    def get(self, request, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('/login')
+
+        journal = Journal.objects.get(id=kwargs.get('pk'))
+        if not journal.user == request.user:
+            return redirect('/')
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
 
 
 def get_value_sum(dict_list):
