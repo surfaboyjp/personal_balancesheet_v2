@@ -23,8 +23,7 @@
                                         <th colspan="4" class="title">資産の部</th>
                                     </tr>
                                     <tr>
-                                        <td class="lv1-bottom">流動資産</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom" colspan="2">流動資産</td>
                                         <td class="amount lv1-bottom">{{ bs.liquid_assets|intcomma }}</td>
                                         <td class="rate lv1-bottom rate-color">{{ bs.liquid_asset_rate|floatformat:1 }}％</td>
                                     </tr>
@@ -37,8 +36,7 @@
                                     </tr>
                                     {% endfor %}
                                     <tr>
-                                        <td class="lv2-last">固定資産</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td class="lv2-last" colspan="2">固定資産</td>
                                         <td class="amount lv2-last">{{ bs.fixed_assets|intcomma }}</td>
                                         <td class="rate lv2-last rate-color">{{ bs.fixed_asset_rate|floatformat:1 }}％</td>
                                     </tr>
@@ -51,8 +49,7 @@
                                     </tr>
                                     {% endfor %}
                                     <tr>
-                                        <td class="lv2-top">繰延資産</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td class="lv2-top" colspan="2">繰延資産</td>
                                         <td class="lv2-top amount">{{ bs.deferred_assets|intcomma }}</td>
                                         <td class="lv2-top rate rate-color">{{ bs.deferred_asset_rate|floatformat:1 }}％</td>
                                     </tr>
@@ -65,8 +62,7 @@
                                     </tr>
                                     {% endfor %}
                                     <tr class="bottom">
-                                        <td>総資産</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td colspan="2">総資産</td>
                                         <td class="amount bs_total_assets">{{ bs.asset|intcomma }}</td>
                                         <td class="rate rate-color">100%</td>
                                     </tr>
@@ -78,8 +74,7 @@
                                         <th colspan="4" class="title">負債の部</th>
                                     </tr>
                                     <tr>
-                                        <td>流動負債</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td colspan="2">流動負債</td>
                                         <td class="amount">{{ bs.liquid_liability|intcomma }}</td>
                                         <td class="rate rate-color">{{ bs.liquid_liability_rate|intcomma|floatformat:1 }}％</td>
                                     </tr>
@@ -92,8 +87,7 @@
                                     </tr>
                                     {% endfor %}
                                     <tr>
-                                        <td>固定負債</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td colspan="2">固定負債</td>
                                         <td class="amount">{{ bs.liquid_liability|intcomma }}</td>
                                         <td class="rate rate-color">{{ bs.fixed_liability_rate|floatformat:1 }}％</td>
                                     </tr>
@@ -106,8 +100,7 @@
                                     </tr>
                                     {% endfor %}
                                     <tr>
-                                         <td>負債合計</td>
-                                        <td class="lv1-bottom"></td>
+                                         <td colspan="2">負債合計</td>
                                         <td class="amount bs_total_assets">{{ bs.liability|intcomma }}</td>
                                         <td class="rate rate-color">100%</td>
                                     </tr>
@@ -115,14 +108,12 @@
                                         <th class="title" colspan="4">純資産の部</th>
                                     </tr>
                                     <tr>
-                                        <td class="lv1-bottom">純資産</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td class="lv1-bottom" colspan="2">純資産</td>
                                         <td class="amount lv1-bottom">{{ bs.capital|intcomma }}</td>
                                         <td class="rate lv1-bottom rate-color">{{ bs.capital_rate|floatformat:1 }}％</td>
                                     </tr>
                                     <tr class="bottom">
-                                        <td>負債・純資産合計</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td colspan="2">負債・純資産合計</td>
                                         <td class="amount">{{ bs.liability_capital_sum|intcomma }}</td>
                                         <td class="rate rate-color">100%</td>
                                     </tr>
@@ -142,14 +133,12 @@
                                         <th colspan="4" class="title td-top">損益計算書</th>
                                     </tr>
                                     <tr>
-                                        <td class="font-weight-bold">総収入</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td class="font-weight-bold" colspan="2">総収入</td>
                                         <td class="amount font-weight-bold">{{ pl.income|intcomma }}</td>
                                         <td class="rate font-weight-bold">100％</td>
                                     </tr>
                                     <tr>
-                                        <td>メイン収入</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td colspan="2">メイン収入</td>
                                         <td class="amount">{{ pl.main_incomes|intcomma }}</td>
                                         <td class="rate">{{ pl.main_income_rate|floatformat:1 }}％</td>
                                     </tr>
@@ -162,8 +151,7 @@
                                     </tr>
                                     {% endfor %}
                                     <tr>
-                                        <td>サブ収入</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td colspan="2">サブ収入</td>
                                         <td class="amount">{{ pl.sub_incomes|intcomma }}</td>
                                         <td class="rate">{{ pl.sub_income_rate|floatformat:1 }}％</td>
                                     </tr>
@@ -176,8 +164,7 @@
                                     </tr>
                                     {% endfor %}
                                     <tr class="bottom">
-                                        <td>流動支出</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td colspan="2">流動支出</td>
                                         <td class="amount">{{ pl.liquid_costs|intcomma }}</td>
                                         <td class="rate">{{ pl.liquid_cost_rate|floatformat:1 }}％</td>
                                     </tr>
@@ -190,8 +177,7 @@
                                     </tr>
                                     {% endfor %}
                                     <tr>
-                                        <td>固定支出</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td colspan="2">固定支出</td>
                                         <td class="amount">{{ pl.fixed_costs|intcomma }}</td>
                                         <td class="rate">{{ pl.fixed_cost_rate|floatformat:1 }}％</td>
                                     </tr>
@@ -204,14 +190,12 @@
                                     </tr>
                                     {% endfor %}
                                     <tr>
-                                        <td class="font-weight-bold">総支出</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td class="font-weight-bold" colspan="2">総支出</td>
                                         <td class="amount font-weight-bold">{{ pl.cost|intcomma }}</td>
                                         <td class="rate font-weight-bold">{{ pl.cost_rate|floatformat:1 }}％</td>
                                     </tr>
                                     <tr>
-                                        <td class="font-weight-bold">繰越資産</td>
-                                        <td class="lv1-bottom"></td>
+                                        <td class="font-weight-bold" colspan="2">繰越資産</td>
                                         <td class="amount font-weight-bold">{{ pl.saving|intcomma }}</td>
                                         <td class="rate font-weight-bold">{{ pl.saving_rate|floatformat:1 }}％</td>
                                     </tr>

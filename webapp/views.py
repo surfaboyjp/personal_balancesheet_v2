@@ -439,20 +439,6 @@ class JournalSettingsView(DetailView, MultipleObjectMixin):
     model = Journal
     template_name = 'webapp/journal_settings.html'
 
-    def get_context_data(self, **kwargs):
-        assets = Asset.objects.filter(journal=self.kwargs['pk']).values()
-        liabilities = Liability.objects.filter(journal=self.kwargs['pk']).values()
-        incomes = Income.objects.filter(journal=self.kwargs['pk']).values()
-        costs = Cost.objects.filter(journal=self.kwargs['pk']).values()
-        context = {
-            'journal': self.object,
-            'assets': assets,
-            'liabilities': liabilities,
-            'incomes': incomes,
-            'costs': costs,
-        }
-        return context
-
     def get(self, request, **kwargs):
         if not request.user.is_authenticated:
             return redirect('/login')
@@ -462,6 +448,21 @@ class JournalSettingsView(DetailView, MultipleObjectMixin):
             return redirect('/')
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        assets = Asset.objects.filter(journal=self.kwargs['pk']).values()
+        liabilities = Liability.objects.filter(journal=self.kwargs['pk']).values()
+        incomes = Income.objects.filter(journal=self.kwargs['pk']).values()
+        costs = Cost.objects.filter(journal=self.kwargs['pk']).values()
+        journal = Journal.objects.get(id=self.kwargs['pk'])
+        context = {
+            'journal': journal,
+            'assets': assets,
+            'liabilities': liabilities,
+            'incomes': incomes,
+            'costs': costs,
+        }
+        return context
 
 
 def get_value_sum(dict_list):
