@@ -6,11 +6,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <title>Personal B/S<i class="fas fa-chart-pie" fa-1x></i></title>
+        <title>Personal B/S</title>
 
         <!-- ========custom.cssのリンクを追加======== -->
         <link rel="stylesheet" href="{% static 'css/custom.css' %}">
             <!-- Font Awesome -->
+        <!-- Google Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
         <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
         <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css"
@@ -24,33 +26,49 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
         <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
         <!-- datatablesのための追加 終了 -->
-           <style>
-        @import url(https://fonts.googleapis.com/earlyaccess/notosansjp.css);
 
-        .font{
-            font-family: 'Kosugi Maru', sans-serif;
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&family=Noto+Sans+JP:wght@500&display=swap');
+        .basic-font {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
         }
-        .fa-balance-scale {color: #000}
-        .fa-file-alt {color: #000}
+
+        <!-- .fa-balance-scale {color: #000}
+        .fa-file-alt {color: #000} -->
         .fa-chart-line {color: #fff}
 
-    </style>
+        @import url(https://fonts.googleapis.com/earlyaccess/notosansjp.css);
+
+        .b-font {
+            font-family: 'Kosugi Maru', sans-serif;
+            font-weight: 400;
+        }
+        .t-font {
+            font-family: 'Kosugi Maru', sans-serif;
+            font-weight: 400;
+        }
+
+
+        </style>
 
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark mb-5" style="background-color: #1C2B48;">
-            <a class="navbar-brand" href="{% url 'webapp:index' %}"><font color="#1CB393 "><font style="font-family: 'American Typewriter','Meiryo UI','ヒラギノ丸ゴ ProN','Hiragino Maru Gothic ProN',sans-serif;">理想の家計</font><i class="fas fa-chart-pie" fa-1x></i></font></a>
+        <nav class="navbar navbar-expand-lg navbar-dark basic-font" style="background-color: #1C2B48;">
+            <a class="navbar-brand" href="{% url 'webapp:index' %}"><font color="#1CB393">理想の家計</font><i class="fas fa-chart-pie white-text" fa-2x></i>
+            </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item active mx-3">
-                        <a class="nav-link" href="https://leoxtrust.com/">複利のまほう<i class="fas fa-chart-line white-text fa-1x"></i></a>
+                    <li class="nav-item active mx-1">
+                        <a class="navbar-brand" href="https://leoxtrust.com/"><font color="#1CB393 ">複利のまほう</font><i class="fas fa-chart-line white-text fa-1x"></i></a>
                     </li>
-                    <li class="nav-item active mx-3">
-                        <a class="nav-link" href="https://django-blog1976.herokuapp.com/">父が２人の息子に伝えたい投資原則<i class="fas fa-home"></i></a>
+
+                    <li class="nav-item active mx-1">
+                        <a class="navbar-brand" href="https://django-blog1976.herokuapp.com/"><font color="#1CB393 ">父が２人の息子に伝えたい投資原則</font><i class="fas fa-home white-text fa-1x"></i></a>
                     </li>
 
                     {% if user.is_authenticated %}
